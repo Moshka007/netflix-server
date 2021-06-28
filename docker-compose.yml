@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  server:
+    build:
+      context: "./server"
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./server:/app
+      - ./server/api:/app/api
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    links:
+     - postgres

@@ -1,0 +1,10 @@
+FROM node:12.16.0
+
+EXPOSE 3000
+COPY ["./package.json", "./package-lock.json", ".eslintrc", "/app/"]
+WORKDIR /app
+RUN npm i --quiet
+
+VOLUME /app
+
+CMD npm start
